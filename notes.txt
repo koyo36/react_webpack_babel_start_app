@@ -1,0 +1,93 @@
+mkdir -p src
+npm init -y
+
+npm i webpack --save-dev
+npm i webpack-cli --save-dev
+
+#package.json
+"scripts": {
+  "build": "webpack --mode production"
+}
+
+#babel
+npm i @babel/core babel-loader @babel/preset-env @babel/preset-react --save-dev
+
+#configure babel
+#file => .babelrc
+{
+  "presets": ["@babel/preset-env", "@babel/preset-react"]
+}
+
+#create webpack.config.js
+
+#setup react
+npm i react react-dom
+
+#create 2 folders
+src/js/components/container
+src/js/components/presentational
+
+#instaling Prop Types
+npm i prop-types --save-dev
+
+#entry point will be
+./src/index.js
+
+#run build
+npm run bild
+
+
+#Set up React, Webpack, and Babel
+
+#Instal html-webpack-plugin and html-loader
+npm i html-webpack-plugin html-loader --save-dev
+
+#update webpack config
+#webpack.config.js
+
+const HtmlWebPackPlugin = require("html-webpack-plugin");
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader"
+        }
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: "html-loader"
+          }
+        ]
+      }
+    ]
+  },
+  plugins: [
+    new HtmlWebPackPlugin({
+      template: "./src/index.html",
+      filename: "./index.html"
+    })
+  ]
+};
+
+
+#add this to bottom of ./src/js/components/container/FormContainer.jsx
+const wrapper = document.getElementById("create-article-form");
+wrapper ? ReactDOM.render(<FormContainer />, wrapper) : false;
+
+# then run the build 
+npm run bild
+
+
+#Setup Webpack dev server
+npm i webpack-dev-server --save-dev
+
+# In package.json add
+"scripts": {
+  "start": "webpack-dev-server --open --mode development",
+  "build": "webpack --mode production"
+}
